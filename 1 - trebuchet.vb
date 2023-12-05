@@ -3,8 +3,8 @@ Imports Microsoft.VisualBasic.FileIO
 Imports System.Text.RegularExpressions
 Module Module1
 
-    Sub Main()
-        Dim pad = "C:\Users\mle.SERVER\Downloads\trebuchet.txt"
+    Public Sub Trebuchet()
+        Dim pad = "C:\Users\mle.SERVER\source\repos\AC2023 - Trebuchet\trebuchet.txt"
         Dim lijnen As New List(Of String())
 
         Using parser = New TextFieldParser(pad)
@@ -47,7 +47,6 @@ Module Module1
 
         Console.WriteLine(Nummer)
 
-        Dim x = Console.ReadLine()
     End Sub
 
 End Module

@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{145A8545-1896-4E00-935D-BB7EED9436A7}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>AC2023___Trebuchet.Module1</StartupObject>
+    <StartupObject>Sub Main</StartupObject>
     <RootNamespace>AC2023___Trebuchet</RootNamespace>
     <AssemblyName>AC2023 - Trebuchet</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -69,7 +69,10 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="1 - trebuchet.vb" />
+    <Compile Include="1 - Trebuchet.vb" />
+    <Compile Include="2 - Cube.vb" />
+    <Compile Include="3 - Gears.vb" />
+    <Compile Include="Main.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -105,6 +108,11 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Cube.txt" />
+    <Content Include="Gear.txt" />
+    <Content Include="trebuchet.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
