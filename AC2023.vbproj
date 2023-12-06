@@ -73,6 +73,7 @@
     <Compile Include="2 - Cube.vb" />
     <Compile Include="3 - Gears.vb" />
     <Compile Include="Main.vb" />
+    <Compile Include="4 - Cards.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -88,6 +89,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="5 - Seeds.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -110,8 +112,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Cards.txt" />
     <Content Include="Cube.txt" />
     <Content Include="Gear.txt" />
+    <Content Include="Seeds.txt" />
     <Content Include="trebuchet.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
