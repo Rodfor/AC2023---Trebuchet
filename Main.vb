@@ -1,6 +1,6 @@
 ﻿Module Main
     Sub Main()
-        Seeds()
+        Time()
 
         Dim x = Console.ReadLine()
     End Sub

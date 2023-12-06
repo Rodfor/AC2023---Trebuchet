@@ -1,6 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.FileIO
-Imports System.Text.RegularExpressions
-Imports System.Threading
+
 Module Module5
     Public Enum Mode
         Seeds
@@ -39,8 +38,6 @@ Module Module5
         Dim humidityMap As New List(Of Map)
         Dim locationMap As New List(Of Map)
         Dim zaadRanges As New List(Of Range)
-
-
 
         For Each Lijn In lijnen
 
