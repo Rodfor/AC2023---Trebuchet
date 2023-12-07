@@ -72,6 +72,7 @@
     <Compile Include="1 - Trebuchet.vb" />
     <Compile Include="2 - Cube.vb" />
     <Compile Include="3 - Gears.vb" />
+    <Compile Include="7 - Camel.vb" />
     <Compile Include="Main.vb" />
     <Compile Include="4 - Cards.vb" />
     <Compile Include="6 - Time .vb" />
@@ -117,6 +118,7 @@
     <Content Include="Cube.txt" />
     <Content Include="Gear.txt" />
     <Content Include="Seeds.txt" />
+    <Content Include="Camel.txt" />
     <Content Include="trebuchet.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

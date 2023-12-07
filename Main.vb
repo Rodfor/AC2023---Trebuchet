@@ -1,6 +1,6 @@
 ﻿Module Main
     Sub Main()
-        Time()
+        Camel()
 
         Dim x = Console.ReadLine()
     End Sub
