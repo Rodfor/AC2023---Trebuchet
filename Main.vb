@@ -1,6 +1,6 @@
 ﻿Module Main
     Sub Main()
-        Camel()
+        Spring()
 
         Dim x = Console.ReadLine()
     End Sub
