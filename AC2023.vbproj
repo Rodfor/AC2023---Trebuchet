@@ -70,13 +70,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="1 - Trebuchet.vb" />
-    <Compile Include="12 - Springs.vb" />
     <Compile Include="2 - Cube.vb" />
     <Compile Include="3 - Gears.vb" />
+    <Compile Include="12 - Springs.vb" />
     <Compile Include="7 - Camel.vb" />
-    <Compile Include="10 - Pipe.vb" />
-    <Compile Include="11 - Expansion.vb" />
-    <Compile Include="9 - Oasis.vb" />
     <Compile Include="Main.vb" />
     <Compile Include="4 - Cards.vb" />
     <Compile Include="6 - Time .vb" />
@@ -96,7 +93,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="5 - Seeds.vb" />
-    <Compile Include="8 - Maps.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -122,12 +118,8 @@
     <Content Include="Cards.txt" />
     <Content Include="Cube.txt" />
     <Content Include="Gear.txt" />
-    <Content Include="Maps.txt" />
-    <Content Include="Pipes.txt" />
     <Content Include="Seeds.txt" />
     <Content Include="Camel.txt" />
-    <Content Include="Oasis.txt" />
-    <Content Include="Space.txt" />
     <Content Include="Springs.txt" />
     <Content Include="trebuchet.txt" />
   </ItemGroup>
