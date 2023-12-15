@@ -29,8 +29,16 @@ Dim Patterns As New List(Of List(of String))
         For each P In Patterns
             Dim Dupes = MaakDupes(P)       
             Dim prevAnswer = CheckSymmetry(P)
+            If prevAnswer = -1 Then
+                Console.WriteLine("ERROR PREVIOUS")
+            End If
 
-            Totaal += CheckDupes(Dupes,prevAnswer)
+            Dim Answer = CheckDupes(Dupes,prevAnswer)
+             If Answer is nothing then
+                Console.WriteLine("ERROR NOW")
+            End If
+
+            Totaal += Answer
             prevTotaal += prevAnswer
         Next
 
@@ -42,7 +50,7 @@ Dim Patterns As New List(Of List(of String))
         Dim Sym As Integer
 
         For Each D In Dupes
-            Sym = CheckSymmetry(D)
+            Sym = CheckSymmetry(D, prevAnswer)
             If Sym <> -1 andalso Sym <> prevAnswer Then
                 Console.WriteLine(Sym.ToString + " -- " + prevAnswer.ToString)
                 For each P In D
@@ -72,21 +80,24 @@ Dim Patterns As New List(Of List(of String))
         Return Dupes
     End Function
 
-    Private Function CheckSymmetry(Pattern As List(Of String)) As Integer
+    Private Function CheckSymmetry(Pattern As List(Of String), optional filter As Integer = -1) As Integer
         Dim Aantal As Integer = -1
 
-        Aantal = CheckHorizontal(Pattern)
+        Aantal = CheckHorizontal(Pattern, filter)
         If Aantal = -1 Then
-            Aantal = CheckVertical(Pattern)
+            Aantal = CheckVertical(Pattern, filter)
         End If
 
         Return Aantal
     End Function
 
-    Private Function CheckHorizontal(Pattern As List(Of String)) As Integer
+    Private Function CheckHorizontal(Pattern As List(Of String), optional filter As Integer = -1) As Integer
         For  i = 0 To  Pattern.Count - 2
             if ControleHorizontaal(Pattern, i, 0) Then
-                Return (i + 1) * 100          
+                Dim getal As integer = (i + 1) * 100  
+                If getal <> Filter Then
+                    Return getal        
+                End If
             End If
         Next
         Return - 1
@@ -104,10 +115,13 @@ Dim Patterns As New List(Of List(of String))
         End If
     End Function
 
-    Private Function Checkvertical(Pattern As List(Of String)) As Integer
+    Private Function Checkvertical(Pattern As List(Of String), optional filter As Integer = -1) As Integer
         For i = 0 To Pattern(0).Length - 2
             If ControleVerticaal(Pattern, i, 0) Then
-                Return i + 1
+                Dim getal =  i + 1 
+                 If getal <> Filter Then
+                    Return getal   
+                End If
             End If
         Next
 
