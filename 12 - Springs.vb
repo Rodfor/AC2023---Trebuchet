@@ -25,7 +25,7 @@ Module Module12
             Dim SpringGroups As String = lijnen(i)(0)
             springs.Add(SpringGroups + "?" + SpringGroups + "?" + SpringGroups + "?" + SpringGroups + "?" + SpringGroups)
 
-            Console.Write(springs(i) + " - ")
+            ' Console.Write(springs(i) + " - ")
 
             Dim Info As New List(Of Integer)
             For Each c In lijnen(i)(1).Split(",")
@@ -39,14 +39,33 @@ Module Module12
                 Info.Add(c)
             Next
 
-            For Each l In Info
-                Console.Write(l.ToString + ", ")
-            Next
+            'For Each l In Info
+            '    Console.Write(l.ToString + ", ")
+            'Next
 
             SpringInfo.Add(Info)
-            Console.WriteLine("")
+            ' Console.WriteLine("")
 
         Next
+
+        Dim SpringLists As New List(Of List(Of String))
+
+        For i = 0 To springs.Count - 1
+            Dim SpringList As New List(Of String)
+            Dim S = springs(i)
+            S.Trim(".")
+            For Each g In S.Split(".")
+                If g <> "." AndAlso g <> "" Then
+                    SpringList.Add(g)
+                End If
+            Next
+            SplitsFirst(SpringList, SpringInfo(i))
+            SplitsLast(SpringList, SpringInfo(i))
+            Console.WriteLine(String.Join(".", SpringList.ToArray) + " - " + String.Join(",", SpringInfo(i)))
+            'SpringLists.Add(SpringList)
+            springs(i) = String.Join(".", SpringList.ToArray)
+        Next
+
 
         Dim totaal As Long = 0
 
@@ -55,50 +74,133 @@ Module Module12
             Console.WriteLine(springs(i) + " - " + Mogelijkheden.ToString)
             totaal += Mogelijkheden
         Next
+
         Console.WriteLine(totaal.ToString)
 
     End Sub
 
-    Public Function Getmogelijkheiden(str As String, info As List(Of Integer)) As Integer
-        Dim Som As Integer = 0
 
-        If str.Contains("?") Then
-            Dim index = str.IndexOf("?")
-            Som += Getmogelijkheiden(str.Substring(0, index) + "." + str.Substring(index + 1), info)
-            Som += Getmogelijkheiden(str.Substring(0, index) + "#" + str.Substring(index + 1), info)
-            Return Som
-        Else
-            Return CheckStringMogelijk(str, info)
+    Private Sub SplitsFirst(springs As List(Of String), info As List(Of Integer))
+        If springs.First.Length = info.First Then
+            springs.RemoveAt(0)
+            info.RemoveAt(0)
+            SplitsFirst(springs, info)
         End If
-    End Function
+    End Sub
 
-    Public Function CheckStringMogelijk(str As String, info As List(Of Integer)) As Integer
-        Dim groups As New List(Of String)
+    Private Sub SplitsLast(springs As List(Of String), info As List(Of Integer))
+        If springs.Last.Length = info.Last Then
+            springs.RemoveAt(springs.Count - 1)
+            info.RemoveAt(info.Count - 1)
+            SplitsLast(springs, info)
+        End If
+    End Sub
 
-        For Each g In str.Trim(".").Split(".")
-            If g.Contains("#") Then
-                groups.Add(g)
-            End If
+
+    Private Function GetMogelijkHeden(Spring As String, Info As List(Of Integer))
+        Dim Statussen As New Dictionary(Of Tuple(Of Integer, Integer), Integer)
+        Statussen.Add(Tuple.Create(0, 0), 1)
+
+        For Each c In Spring
+            Dim NewStatussen As New Dictionary(Of Tuple(Of Integer, Integer), Integer)
+            Select Case c
+                Case "."
+                    'Dim ToDelete = Statussen.Where(Function(x) x.Item2 <> 0 AndAlso x.Item2 < Info(x.Item1))
+                    'For Each S In ToDelete
+                    '    Statussen.Remove(S)
+                    'Next
+                    Dim noNewGroup = Statussen.Where(Function(x) x.Key.Item2 = 0)
+                    For Each S In noNewGroup
+                        NewStatussen.Add(S.Key, S.Value)
+                    Next
+
+                    Dim ToIncrementGroup = Statussen.Where(Function(x) x.Key.Item2 = Info(x.Key.Item1))
+                    For Each S In ToIncrementGroup
+                        Dim NewS = Tuple.Create(S.Key.Item1 + 1, 0)
+                        If NewStatussen.ContainsKey(NewS) Then
+                            NewStatussen(NewS) += S.Value
+                        Else
+                            NewStatussen.Add(NewS, S.Value)
+                        End If
+                    Next
+
+                Case "#"
+                    ' Dim Teveel = Statussen.Where(Function(x) x.Key.Item2 = Info(x.Key.Item1))
+
+                    Dim ToIncrementGroup = Statussen.Where(Function(x) x.Key.Item2 < Info(x.Key.Item1))
+                    For Each S In ToIncrementGroup
+                        Dim NewS = Tuple.Create(S.Key.Item1 + 1, 0)
+                        NewStatussen.Add(NewS, S.Value)
+                    Next
+
+                Case "?"
+                    For Each S In Statussen
+
+                    Next
+
+            End Select
+
         Next
 
-        Dim succes As Boolean = True
 
-        If groups.Count = info.Count Then
-            For i = 0 To groups.Count - 1
-                If groups(i).Length <> info(i) Then
-                    succes = False
+        If Index = Spring.Length Then
+            Return 1
+        End If
+        Dim Som As Integer
+        Select Case Spring(Index)
+            Case "."
+                If Info(status.Item1) = status.Item2 Then
+                    Dim newStatus As Tuple(Of Integer, Integer, Integer) = (status.Item1 + 1, 0, status.Item3)
+                    Som = GetMogelijkHeden(Spring, Info, Index + 1, newStatus)
                 End If
-            Next
-        Else
-            succes = False
-        End If
+            Case "#"
 
-        If succes Then
-            Console.WriteLine(str + " - OK")
-        End If
+            Case "?"
 
-        If succes Then Return 1 Else Return 0
-
+        End Select
     End Function
+
+
+    'Private Function Getmogelijkheiden(str As String, info As List(Of Integer)) As Integer
+    '    Dim Som As Integer = 0
+
+    '    Dim index = str.IndexOf("?")
+    '    If index <> -1 Then
+    '        Som += Getmogelijkheiden(str.Substring(0, index) + "." + str.Substring(index + 1), info)
+    '        Som += Getmogelijkheiden(str.Substring(0, index) + "#" + str.Substring(index + 1), info)
+    '        Return Som
+    '    Else
+    '        Return CheckStringMogelijk(str, info)
+    '    End If
+    'End Function
+
+    'Private Function CheckStringMogelijk(str As String, info As List(Of Integer)) As Integer
+    '    Dim groups As New List(Of String)
+
+    '    For Each g In str.Trim(".").Split(".")
+    '        If g.Contains("#") Then
+    '            groups.Add(g)
+    '        End If
+    '    Next
+
+    '    Dim succes As Boolean = True
+
+    '    If groups.Count = info.Count Then
+    '        For i = 0 To groups.Count - 1
+    '            If groups(i).Length <> info(i) Then
+    '                succes = False
+    '            End If
+    '        Next
+    '    Else
+    '        succes = False
+    '    End If
+
+    '    If succes Then
+    '        Console.WriteLine(str + " - OK")
+    '    End If
+
+    '    If succes Then Return 1 Else Return 0
+
+    'End Function
 
 End Module
