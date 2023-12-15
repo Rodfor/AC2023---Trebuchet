@@ -1,6 +1,6 @@
 ﻿Module Main
     Sub Main()
-        Spring()
+        Mirror()
 
         Dim x = Console.ReadLine()
     End Sub

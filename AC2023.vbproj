@@ -70,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="1 - Trebuchet.vb" />
+    <Compile Include="13 - Mirrors.vb" />
     <Compile Include="2 - Cube.vb" />
     <Compile Include="3 - Gears.vb" />
     <Compile Include="12 - Springs.vb" />
@@ -118,6 +119,7 @@
     <Content Include="Cards.txt" />
     <Content Include="Cube.txt" />
     <Content Include="Gear.txt" />
+    <Content Include="Mirrors.txt" />
     <Content Include="Seeds.txt" />
     <Content Include="Camel.txt" />
     <Content Include="Springs.txt" />
