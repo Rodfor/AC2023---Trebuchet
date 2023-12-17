@@ -1,6 +1,6 @@
 ﻿Module Main
     Sub Main()
-        Mirror()
+        Rock()
 
         Dim x = Console.ReadLine()
     End Sub
