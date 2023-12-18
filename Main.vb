@@ -1,6 +1,6 @@
 ﻿Module Main
     Sub Main()
-        Lens()
+        Beam()
 
         Dim x = Console.ReadLine()
     End Sub

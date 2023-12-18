@@ -72,6 +72,7 @@
     <Compile Include="1 - Trebuchet.vb" />
     <Compile Include="10 - Pipe.vb" />
     <Compile Include="11 - Expansion.vb" />
+    <Compile Include="16 - Beam.vb" />
     <Compile Include="15 - Lens.vb" />
     <Compile Include="8 - Maps.vb" />
     <Compile Include="9 - Oasis.vb" />
@@ -122,6 +123,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Beam.txt" />
     <Content Include="Cards.txt" />
     <Content Include="Cube.txt" />
     <Content Include="Gear.txt" />
