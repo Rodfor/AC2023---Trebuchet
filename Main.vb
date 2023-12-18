@@ -1,6 +1,6 @@
 ﻿Module Main
     Sub Main()
-        Rock()
+        Lens()
 
         Dim x = Console.ReadLine()
     End Sub
