@@ -1,6 +1,6 @@
 ﻿Module Main
     Sub Main()
-        Beam()
+        Crucible()
 
         Dim x = Console.ReadLine()
     End Sub

@@ -77,6 +77,7 @@
     <Compile Include="1 - Trebuchet.vb" />
     <Compile Include="10 - Pipe.vb" />
     <Compile Include="11 - Expansion.vb" />
+    <Compile Include="17 - Crucible.vb" />
     <Compile Include="16 - Beam.vb" />
     <Compile Include="15 - Lens.vb" />
     <Compile Include="8 - Maps.vb" />
@@ -131,6 +132,7 @@
   <ItemGroup>
     <Content Include="Beam.txt" />
     <Content Include="Cards.txt" />
+    <Content Include="Crucible.txt" />
     <Content Include="Cube.txt" />
     <Content Include="Gear.txt" />
     <Content Include="Mirrors.txt" />

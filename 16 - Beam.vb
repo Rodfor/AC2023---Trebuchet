@@ -69,7 +69,7 @@ Module Module16
                 nodeList = newNodes
             End While
 
-            Dim state = endState.Values.GroupBy(Function(x) x.Node)
+            Dim state = endState.values.GroupBy(Function(x) x.Node)
 
             Dim statecount As Long = state.Count
             counts.Add(statecount)
