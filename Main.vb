@@ -1,6 +1,6 @@
 ﻿Module Main
     Sub Main()
-        Crucible()
+        Dig()
 
         Dim x = Console.ReadLine()
     End Sub
