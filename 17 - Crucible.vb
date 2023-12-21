@@ -9,33 +9,33 @@ Module Module17
     Public Sub Crucible()
         Dim pad = "C:\Users\mle.SERVER\source\repos\AC2023 - Trebuchet\Crucible.txt"
         Dim Lijnen() As String = System.IO.File.ReadAllLines(pad)
-        Dim Pattern(Lijnen.Count - 1, Lijnen.First.Length - 1, 3, 2) As Node
+        Dim Pattern(Lijnen.Count - 1, Lijnen.First.Length - 1, 3, 9) As Node
 
         For i = 0 To Lijnen.Count() - 1
             Dim lijn = Lijnen(i)
             For j = 0 To lijn.Length - 1
-                If j <> Pattern.GetLowerBound(1) Then
-                    Pattern(i, j, Direction.Down, 0) = New Node(i, j, Val(lijn(j)), Direction.Down, 0)
-                    Pattern(i, j, Direction.Down, 1) = New Node(i, j, Val(lijn(j)), Direction.Down, 1)
-                    Pattern(i, j, Direction.Down, 2) = New Node(i, j, Val(lijn(j)), Direction.Down, 2)
-                End If
-
-                If j <> Pattern.GetUpperBound(1) Then
-                    Pattern(i, j, Direction.Up, 0) = New Node(i, j, Val(lijn(j)), Direction.Up, 0)
-                    Pattern(i, j, Direction.Up, 1) = New Node(i, j, Val(lijn(j)), Direction.Up, 1)
-                    Pattern(i, j, Direction.Up, 2) = New Node(i, j, Val(lijn(j)), Direction.Up, 2)
-                End If
-
                 If i <> Pattern.GetLowerBound(0) Then
-                    Pattern(i, j, Direction.Right, 0) = New Node(i, j, Val(lijn(j)), Direction.Right, 0)
-                    Pattern(i, j, Direction.Right, 1) = New Node(i, j, Val(lijn(j)), Direction.Right, 1)
-                    Pattern(i, j, Direction.Right, 2) = New Node(i, j, Val(lijn(j)), Direction.Right, 2)
+                    For x = 0 To 9
+                        Pattern(i, j, Direction.Down, x) = New Node(i, j, Val(lijn(j)), Direction.Down, x)
+                    Next
                 End If
 
                 If i <> Pattern.GetUpperBound(0) Then
-                    Pattern(i, j, Direction.Left, 0) = New Node(i, j, Val(lijn(j)), Direction.Left, 0)
-                    Pattern(i, j, Direction.Left, 1) = New Node(i, j, Val(lijn(j)), Direction.Left, 1)
-                    Pattern(i, j, Direction.Left, 2) = New Node(i, j, Val(lijn(j)), Direction.Left, 2)
+                    For x = 0 To 9
+                        Pattern(i, j, Direction.Up, x) = New Node(i, j, Val(lijn(j)), Direction.Up, x)
+                    Next
+                End If
+
+                If j <> Pattern.GetLowerBound(1) Then
+                    For x = 0 To 9
+                        Pattern(i, j, Direction.Right, x) = New Node(i, j, Val(lijn(j)), Direction.Right, x)
+                    Next
+                End If
+
+                If j <> Pattern.GetUpperBound(1) Then
+                    For x = 0 To 9
+                        Pattern(i, j, Direction.Left, x) = New Node(i, j, Val(lijn(j)), Direction.Left, x)
+                    Next
                 End If
             Next
         Next
@@ -54,10 +54,10 @@ Module Module17
         Dim currentNode = OpenList.RemoveFirst
 
         Do While currentNode.hCost > 0
-            Console.WriteLine(currentNode.x.ToString + "," + currentNode.y.ToString + "," + currentNode.Dir.ToString + "," + currentNode.timesMoved.ToString + " : H:" + currentNode.hCost.ToString + " G:" + currentNode.gCost.ToString + " F:" + currentNode.fCost.ToString + " P:" + currentNode.parent.Name)
+            'Console.WriteLine(currentNode.x.ToString + "," + currentNode.y.ToString + "," + currentNode.Dir.ToString + "," + currentNode.timesMoved.ToString + " : H:" + currentNode.hCost.ToString + " G:" + currentNode.gCost.ToString + " F:" + currentNode.fCost.ToString + " P:" + currentNode.parent.Name)
 
             For Each B In GetBuren(Pattern, currentNode)
-                If B.Visited Then
+                If B Is Nothing OrElse B.Visited Then
                     Continue For
                 End If
 
@@ -82,18 +82,11 @@ Module Module17
 
         Loop
 
-        'For i = 0 To Pattern.GetUpperBound(0)
-        '    For j = 0 To Pattern.GetUpperBound(1)
-        '        Dim N = Pattern(i, j)
-        '        Console.WriteLine(N.x.ToString + "," + N.y.ToString + " : H:" + N.hCost.ToString + " G:" + N.gCost.ToString + " F:" + N.fCost.ToString)
-        '    Next
-        'Next
-
         Dim path As New List(Of Node)
 
         While Not currentNode.Name = startnode.Name
             path.Add(currentNode)
-            Console.WriteLine(currentNode.x.ToString + "," + currentNode.y.ToString + " : V:" + currentNode.value.ToString + " P:" + currentNode.parent.Name)
+            'Console.WriteLine(currentNode.x.ToString + "," + currentNode.y.ToString + " : V:" + currentNode.value.ToString + " P:" + currentNode.parent.Name)
             currentNode = currentNode.parent
         End While
 
@@ -101,7 +94,7 @@ Module Module17
         Dim som = 0
         For Each N In path
             som += N.value
-            Console.WriteLine(N.x.ToString + "," + N.y.ToString + " : V:" + N.value.ToString + " P:" + N.parent.Name)
+            Console.WriteLine(N.x.ToString + "," + N.y.ToString + "," + N.Dir.ToString + "," + N.timesMoved.ToString + " : V:" + N.value.ToString + " P:" + N.parent.Name)
         Next
 
         Console.WriteLine(som)
@@ -109,37 +102,99 @@ Module Module17
 
     Public Function GetBuren(Pattern(,,,) As Node, N As Node) As List(Of Node)
         Dim Buren As New List(Of Node)
-        If N.x > Pattern.GetLowerBound(0) Then
-            If N.Dir = Direction.Left Then
-                If N.timesMoved < 2 Then Buren.Add(Pattern(N.x - 1, N.y, Direction.Left, N.timesMoved + 1))
-            Else
-                Buren.Add(Pattern(N.x - 1, N.y, Direction.Left, 0))
+
+
+
+        If N.timesMoved < 3 Then
+            Select Case N.Dir
+                Case Direction.Up
+                    If N.x + (N.timesMoved - 2) > Pattern.GetLowerBound(0) Then
+                        Buren.Add(Pattern(N.x - 1, N.y, Direction.Up, N.timesMoved + 1))
+                    End If
+
+                Case Direction.Down
+                    If N.x + (2 - N.timesMoved) < Pattern.GetUpperBound(0) Then
+                        Buren.Add(Pattern(N.x + 1, N.y, Direction.Down, N.timesMoved + 1))
+                    End If
+
+                Case Direction.Left
+                    If N.y + (N.timesMoved - 2) > Pattern.GetLowerBound(1) Then
+                        Buren.Add(Pattern(N.x, N.y - 1, Direction.Left, N.timesMoved + 1))
+                    End If
+
+                Case Direction.Right
+                    If N.y + (2 - N.timesMoved) < Pattern.GetUpperBound(1) Then
+                        Buren.Add(Pattern(N.x, N.y + 1, Direction.Right, N.timesMoved + 1))
+                    End If
+            End Select
+
+        Else
+            If N.x > Pattern.GetLowerBound(0) Then
+                If N.Dir = Direction.Up Then
+                    If N.timesMoved < 9 Then Buren.Add(Pattern(N.x - 1, N.y, Direction.Up, N.timesMoved + 1))
+                ElseIf N.Dir <> Direction.Down AndAlso N.x > Pattern.GetLowerBound(0) + 3 Then
+                    Buren.Add(Pattern(N.x - 1, N.y, Direction.Up, 0))
+                End If
             End If
+
+            If N.x < Pattern.GetUpperBound(0) Then
+                If N.Dir = Direction.Down Then
+                    If N.timesMoved < 9 Then Buren.Add(Pattern(N.x + 1, N.y, Direction.Down, N.timesMoved + 1))
+                ElseIf N.Dir <> Direction.Up AndAlso N.x < Pattern.GetUpperBound(0) - 3 Then
+                    Buren.Add(Pattern(N.x + 1, N.y, Direction.Down, 0))
+                End If
+            End If
+
+            If N.y > Pattern.GetLowerBound(1) Then
+                If N.Dir = Direction.Left Then
+                    If N.timesMoved < 9 Then Buren.Add(Pattern(N.x, N.y - 1, Direction.Left, N.timesMoved + 1))
+                ElseIf N.Dir <> Direction.Right AndAlso N.y > Pattern.GetLowerBound(1) + 3 Then
+                    Buren.Add(Pattern(N.x, N.y - 1, Direction.Left, 0))
+                End If
+            End If
+
+            If N.y < Pattern.GetUpperBound(1) Then
+                If N.Dir = Direction.Right Then
+                    If N.timesMoved < 9 Then Buren.Add(Pattern(N.x, N.y + 1, Direction.Right, N.timesMoved + 1))
+                ElseIf N.Dir <> Direction.Left AndAlso N.y < Pattern.GetUpperBound(1) - 3 Then
+                    Buren.Add(Pattern(N.x, N.y + 1, Direction.Right, 0))
+                End If
+            End If
+
         End If
 
-        If N.x < Pattern.GetUpperBound(0) Then
-            If N.Dir = Direction.Right Then
-                If N.timesMoved < 2 Then Buren.Add(Pattern(N.x + 1, N.y, Direction.Right, N.timesMoved + 1))
-            Else
-                Buren.Add(Pattern(N.x + 1, N.y, Direction.Right, 0))
-            End If
-        End If
 
-        If N.y > Pattern.GetLowerBound(1) Then
-            If N.Dir = Direction.Up Then
-                If N.timesMoved < 2 Then Buren.Add(Pattern(N.x, N.y - 1, Direction.Up, N.timesMoved + 1))
-            Else
-                Buren.Add(Pattern(N.x, N.y - 1, Direction.Up, 0))
-            End If
-        End If
+        'If N.x > Pattern.GetLowerBound(0) Then
+        '    If N.Dir = Direction.Up Then
+        '        If N.timesMoved < 2 Then Buren.Add(Pattern(N.x - 1, N.y, Direction.Up, N.timesMoved + 1))
+        '    ElseIf N.Dir <> Direction.Down Then
+        '        Buren.Add(Pattern(N.x - 1, N.y, Direction.Up, 0))
+        '    End If
+        'End If
 
-        If N.y < Pattern.GetUpperBound(1) Then
-            If N.Dir = Direction.Down Then
-                If N.timesMoved < 2 Then Buren.Add(Pattern(N.x, N.y + 1, Direction.Down, N.timesMoved + 1))
-            Else
-                Buren.Add(Pattern(N.x, N.y + 1, Direction.Down, 0))
-            End If
-        End If
+        'If N.x < Pattern.GetUpperBound(0) Then
+        '    If N.Dir = Direction.Down Then
+        '        If N.timesMoved < 2 Then Buren.Add(Pattern(N.x + 1, N.y, Direction.Down, N.timesMoved + 1))
+        '    ElseIf N.Dir <> Direction.Up Then
+        '        Buren.Add(Pattern(N.x + 1, N.y, Direction.Down, 0))
+        '    End If
+        'End If
+
+        'If N.y > Pattern.GetLowerBound(1) Then
+        '    If N.Dir = Direction.Left Then
+        '        If N.timesMoved < 2 Then Buren.Add(Pattern(N.x, N.y - 1, Direction.Left, N.timesMoved + 1))
+        '    ElseIf N.Dir <> Direction.Right Then
+        '        Buren.Add(Pattern(N.x, N.y - 1, Direction.Left, 0))
+        '    End If
+        'End If
+
+        'If N.y < Pattern.GetUpperBound(1) Then
+        '    If N.Dir = Direction.Right Then
+        '        If N.timesMoved < 2 Then Buren.Add(Pattern(N.x, N.y + 1, Direction.Right, N.timesMoved + 1))
+        '    ElseIf N.Dir <> Direction.Left Then
+        '        Buren.Add(Pattern(N.x, N.y + 1, Direction.Right, 0))
+        '    End If
+        'End If
 
         Return Buren
     End Function
