@@ -1,6 +1,6 @@
 ﻿Module Main
     Sub Main()
-        Dig()
+        Sort()
 
         Dim x = Console.ReadLine()
     End Sub
