@@ -24,6 +24,7 @@ Module Module18
         End Using
 
         Dim Plan As New List(Of Rule)
+        Dim lengte As Long = 2
 
         For Each L In lijnen
             Dim R As New Rule()
@@ -42,6 +43,16 @@ Module Module18
             R.RGBHEX = L(2)
 
             Plan.Add(R)
+            lengte += R.Length
+
+        Next
+
+
+        lengte = 2
+        For Each R In Plan
+            R.HEXtoRule()
+            lengte += R.Length
+            Console.WriteLine(R.dir.ToString + " - " + R.Length.ToString)
         Next
 
         Dim Vertices As New List(Of Tuple(Of Integer, Integer))
@@ -63,21 +74,34 @@ Module Module18
 
             prevX = Vertices.Last.Item1
             prevY = Vertices.Last.Item2
-            Console.WriteLine(prevX.ToString + "," + prevY.Item2.ToString)
+            Console.WriteLine(prevX.ToString + "," + prevY.ToString)
         Next
 
+        Dim P1 As New System.Numerics.BigInteger(0)
+        Dim P2 As New System.Numerics.BigInteger(0)
 
-        Dim Area As Long = 0
-        Dim P1 As Long = 0
-        Dim P2 As Long = 0
+        Dim Plus1 As New System.Numerics.BigInteger(Vertices(Vertices.Count - 1).Item1)
+        Dim Plus2 As New System.Numerics.BigInteger(Vertices(Vertices.Count - 1).Item2)
+        Plus1 *= Vertices(0).Item2
+        Plus2 *= Vertices(0).Item1
+        P1 += Plus1
+        P2 += Plus2
 
         For i = 0 To Vertices.Count - 2
-            P1 += (Vertices(i).Item1 * Vertices(i + 1).Item2)
-            P2 += (Vertices(i).Item2 * Vertices(i + 1).Item1)
+            Plus1 = New System.Numerics.BigInteger(Vertices(i).Item1)
+            Plus2 = New System.Numerics.BigInteger(Vertices(i).Item2)
+            Plus1 *= Vertices(i + 1).Item2
+            Plus2 *= Vertices(i + 1).Item1
+            P1 += Plus1
+            P2 += Plus2
         Next
 
-https://artofproblemsolving.com/wiki/index.php?title=Shoelace_Theorem
+        Dim Area = P1
+        Area -= P2
+        Area /= 2
+        If Area.Sign = -1 Then Area *= -1
 
+        Console.WriteLine(Area + lengte / 2)
 
         'Dim Pattern(400, 400) As Node
 
@@ -220,8 +244,26 @@ https://artofproblemsolving.com/wiki/index.php?title=Shoelace_Theorem
 
     Public Class Rule
         Public dir As Direction
-        Public Length As Short
+        Public Length As Integer
         Public RGBHEX As String
+
+        Public Sub HEXtoRule()
+
+            RGBHEX = RGBHEX.Trim("(").Trim(")").Trim("#")
+            Select Case Right(RGBHEX, 1)
+                Case "0"
+                    dir = Direction.Right
+                Case "1"
+                    dir = Direction.Down
+                Case "2"
+                    dir = Direction.Left
+                Case "3"
+                    dir = Direction.Up
+            End Select
+
+            Dim Hex = Left(RGBHEX, 5)
+            Length = Convert.ToInt32(Hex, 16)
+        End Sub
     End Class
 
     Public Class Node
