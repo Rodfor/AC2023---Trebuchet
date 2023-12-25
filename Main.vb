@@ -1,6 +1,6 @@
 ﻿Module Main
     Sub Main()
-        Sort()
+        Pulse()
 
         Dim x = Console.ReadLine()
     End Sub

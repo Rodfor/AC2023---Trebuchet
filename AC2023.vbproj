@@ -78,6 +78,7 @@
     <Compile Include="1 - Trebuchet.vb" />
     <Compile Include="10 - Pipe.vb" />
     <Compile Include="11 - Expansion.vb" />
+    <Compile Include="20 - Pulse.vb" />
     <Compile Include="19 - Sorting.vb" />
     <Compile Include="18 - Lagoon.vb" />
     <Compile Include="17 - Crucible.vb" />
@@ -139,6 +140,7 @@
     <Content Include="Cube.txt" />
     <Content Include="Gear.txt" />
     <Content Include="Mirrors.txt" />
+    <Content Include="Pulse.txt" />
     <Content Include="Seeds.txt" />
     <Content Include="Camel.txt" />
     <Content Include="Sorting.txt" />
