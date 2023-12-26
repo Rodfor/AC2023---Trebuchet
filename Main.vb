@@ -1,6 +1,6 @@
 ﻿Module Main
     Sub Main()
-        Pulse()
+        Steps()
 
         Dim x = Console.ReadLine()
     End Sub

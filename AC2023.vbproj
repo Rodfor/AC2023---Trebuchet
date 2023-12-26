@@ -78,6 +78,7 @@
     <Compile Include="1 - Trebuchet.vb" />
     <Compile Include="10 - Pipe.vb" />
     <Compile Include="11 - Expansion.vb" />
+    <Compile Include="21 - Steps.vb" />
     <Compile Include="20 - Pulse.vb" />
     <Compile Include="19 - Sorting.vb" />
     <Compile Include="18 - Lagoon.vb" />
@@ -148,6 +149,7 @@
     <Content Include="Rocks.txt" />
     <Content Include="Lens.txt" />
     <Content Include="Dig.txt" />
+    <Content Include="Steps.txt" />
     <Content Include="trebuchet.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
