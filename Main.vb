@@ -1,6 +1,6 @@
 ﻿Module Main
     Sub Main()
-        Steps()
+        Bricks()
 
         Dim x = Console.ReadLine()
     End Sub
