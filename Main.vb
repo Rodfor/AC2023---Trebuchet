@@ -1,6 +1,6 @@
 ﻿Module Main
     Sub Main()
-        Walk()
+        HailB()
 
         Dim x = Console.ReadLine()
     End Sub
